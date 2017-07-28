@@ -50,7 +50,7 @@ export default Base =>
       }
 
       // If we have SubComponent's we need to make sure we have an expander column
-      if (SubComponent && !expanderColumn) {
+      if (false && SubComponent && !expanderColumn) {
         expanderColumn = { expander: true }
         columnsWithExpander = [expanderColumn, ...columnsWithExpander]
       }
