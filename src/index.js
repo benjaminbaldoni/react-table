@@ -360,6 +360,10 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
 
       const isSortable = _.getFirstDefined(column.sortable, sortable, false)
 
+      const widthMultiplier = typeof column.widthMultiplier !== "undefined" ? (
+        column.widthMultiplier
+      ) : 1;
+
       return (
         <ThComponent
           key={i + '-' + column.id}
@@ -375,9 +379,9 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
           )}
           style={{
             ...styles,
-            flex: `${width} 0 auto`,
-            width: `${width}px`,
-            maxWidth: `${maxWidth}px`,
+            flex: `${width * widthMultiplier} 0 auto`,
+            width: `${width * widthMultiplier}px`,
+            maxWidth: `${maxWidth * widthMultiplier}px`,
           }}
           toggleSort={e => {
             isSortable && this.sortColumn(column, e.shiftKey)
@@ -693,6 +697,10 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                 }
               }
 
+              const widthMultiplier = typeof column.widthMultiplier !== "undefined" ? (
+                column.widthMultiplier
+              ) : 1;
+
               // Return the cell
               return (
                 <TdComponent
@@ -705,9 +713,9 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                   )}
                   style={{
                     ...styles,
-                    flex: `${width} 0 auto`,
-                    width: `${width}px`,
-                    maxWidth: `${maxWidth}px`,
+                    flex: `${width * widthMultiplier} 0 auto`,
+                    width: `${width * widthMultiplier }px`,
+                    maxWidth: `${maxWidth * widthMultiplier}px`,
                   }}
                   {...interactionProps}
                   {...tdProps.rest}
@@ -871,15 +879,19 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         ...columnFooterProps.style,
       }
 
+      const widthMultiplier = typeof column.widthMultiplier !== "undefined" ? (
+        column.widthMultiplier
+      ) : 1;
+
       return (
         <TdComponent
           key={i + '-' + column.id}
           className={classnames(classes, !show && 'hidden')}
           style={{
             ...styles,
-            flex: `${width} 0 auto`,
-            width: `${width}px`,
-            maxWidth: `${maxWidth}px`,
+            flex: `${width * widthMultiplier} 0 auto`,
+            width: `${width * widthMultiplier}px`,
+            maxWidth: `${maxWidth * widthMultiplier}px`,
           }}
           {...columnProps.rest}
           {...tFootTdProps.rest}
