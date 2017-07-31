@@ -127,6 +127,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
       // Sorted Data
       sortedData,
       currentlyResizing,
+      rowPadding,
     } = resolvedState
 
     // Pagination
@@ -165,12 +166,22 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
     const canPrevious = page > 0
     const canNext = page + 1 < pages
 
-    const rowMinWidth = _.sum(
+    let rowMinWidth = _.sum(
       allVisibleColumns.map(d => {
         const resizedColumn = resized.find(x => x.id === d.id) || {}
-        return _.getFirstDefined(resizedColumn.value, d.width, d.minWidth)
+        
+        let columnWidth = _.getFirstDefined(resizedColumn.value, d.width, d.minWidth)
+        if (typeof d.widthMultiplier !== "undefined" && 
+          (columnWidth === d.width || columnWidth === d.minWidth)
+        ) {
+          columnWidth *= d.widthMultiplier
+        }
+
+        return columnWidth
       })
     )
+
+    rowMinWidth += rowPadding
 
     let rowIndex = -1
 
